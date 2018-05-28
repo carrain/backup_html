@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>电力监控系统</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/navigation.css">
+	<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body class="bodyy">
+
+<nav class="navbar-default" role="navigation">
+	<div class="container-fluid"> 
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#example-navbar-collapse">
+			<span class="sr-only">切换导航</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="#">电力监控系统</a>
+	</div>
+	<div class="collapse navbar-collapse" id="example-navbar-collapse">
+		<ul class="nav navbar-nav">
+            <li><a>    </a></li>
+            <li><a href="index.html">电力监控</a></li>
+            <li><a>    </a></li>
+            <li class="active"><a href="conut.html">统计分析</a></li>
+            <li><a>    </a></li>
+            <li><a href="info.html">信息管理</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+					用户 <b class="caret"></b>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="#">登录</a></li>
+					<li class="divider"></li>
+					<li><a href="#">注销</a></li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	</div>
+</nav>
+
+<div id="voltage" style="height:400px"></div>
+<div id="power" style="height:400px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+    <script type="text/javascript">
+        // 路径配置
+        require.config({
+            paths: {
+                echarts: 'http://echarts.baidu.com/build/dist'
+            }
+        });
+        
+        // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var voltage_Chart = ec.init(document.getElementById('voltage')); 
+                var power_Chart = ec.init(document.getElementById('power'));                 
+
+                var voltage_option = {
+                    tooltip: {
+                        trigger: 'axis',
+                    },
+                    legend: {
+                        data: ['电流','电压'],
+                        x:'left'
+                    },
+                    dataZoom: {
+                        show: true,
+                        realtime: true,
+                        start: 0,
+                        end: 100
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            splitLine:{show: false},//去除网格线
+                            type : 'category',
+                            data : [
+                            '2018/4/25','2018/4/26','2018/4/27','2018/4/28','2018/4/29','2018/4/30','2018/5/1','2018/5/2','2018/5/3','2018/5/6','2018/5/7','2018/5/8','2018/5/9','2018/5/10','2018/5/11','2018/5/12','2018/5/13','2018/5/14','2018/5/15','2018/5/16','2018/5/17','2018/5/18','2018/5/19','2018/5/20','2018/5/21','2018/5/22','2018/5/23','2018/5/24'
+                            ]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            "name":"电流",
+                            type : 'value',
+                            axisLabel : {
+                            formatter: '{value} A'
+                        }
+                        },
+                        {
+                            splitLine:{show: false},//去除网格线
+                            "name":"电压",
+                            type : 'value',
+                            axisLabel : {
+                            formatter: '{value} V'
+                        }
+                        },   
+                    ],
+                    series : [
+                        {
+                            "name":"电流",
+                            "type":"line",
+                            "data":[10, 9, 9, 9, 10, 10, 9, 11, 10, 9, 7, 8, 9, 11, 9, 9, 11, 9, 8, 9, 8, 8, 7, 10, 8, 8, 9, 7]
+                        },
+                        {
+                            "name":"电压",
+                            "type":"line",
+                            yAxisIndex: 1,
+                            "data":[215, 219, 227, 225, 212, 220, 213, 214, 227, 219, 226, 211, 214, 224, 212, 215, 229, 223, 215, 230, 228, 219, 217, 228, 212, 230, 214, 223]                    
+                        },
+                    ]
+                };
+
+                var power_option = {
+                    tooltip: {
+                        trigger: 'axis',
+                    },
+                    legend: {
+                        data: ['功率'],
+                        x:'left'
+                    },
+                    dataZoom: {
+                        show: true,
+                        realtime: true,
+                        start: 0,
+                        end: 100
+                    },
+                    calculable : true,
+                    xAxis : [
+                        {
+                            splitLine:{show: false},//去除网格线
+                            type : 'category',
+                            data : [
+                            '2018/4/25','2018/4/26','2018/4/27','2018/4/28','2018/4/29','2018/4/30','2018/5/1','2018/5/2','2018/5/3','2018/5/6','2018/5/7','2018/5/8','2018/5/9','2018/5/10','2018/5/11','2018/5/12','2018/5/13','2018/5/14','2018/5/15','2018/5/16','2018/5/17','2018/5/18','2018/5/19','2018/5/20','2018/5/21','2018/5/22','2018/5/23','2018/5/24'
+                            ]
+                        }
+                    ],
+                    yAxis : [ 
+                        {
+                            "name":"功率",
+                            type : 'value',
+                            axisLabel : {
+                            formatter: '{value} W'
+                        }
+                        },
+                    ],
+                    series : [
+                        {
+                            "name":"功率",
+                            "type":"line",
+                            "data":[1689, 2254, 2269, 2197, 1783, 1713, 1934, 2111, 1852, 1585, 2033, 1800, 2480, 1781, 2044, 1564, 2491, 1618, 1962, 2377, 1499, 1997, 2073, 2161, 1757, 1820, 1540, 1886]
+                        },
+                    ]
+                };
+        
+                // 为echarts对象加载数据 
+                voltage_Chart.setOption(voltage_option); 
+                power_Chart.setOption(power_option); 
+            }
+        );
+    </script>
+
+
+
+</body>
+</html>
